@@ -1,6 +1,6 @@
-### ShopCart Ecommerce Backend
+# ShopCart Ecommerce Backend
 
-## Project Setup
+### Project Setup
 
 1. Clone the project
 
