@@ -3,6 +3,6 @@ const { pingController } = require('../../controllers/pingController');
 const router = express.Router();
 
 
-router.get("/ping", pingController);
+router.get("/", pingController);
 
 module.exports = router;
