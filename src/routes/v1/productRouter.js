@@ -1,11 +1,12 @@
 const express = require('express');
-const { pingController } = require('../../controllers/pingController');
+const { productController } = require('../../controllers/index');
 
 const productRuter = express.Router();
 
 
-productRuter.get("/", (req, res) => {
-    res.send({ products: []})
-});
+productRuter.get("/", productController.getProducts);
+productRuter.get("/:id", productController.getProduct);
+
+
 
 module.exports = productRuter;
