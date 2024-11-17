@@ -6,9 +6,10 @@ class ProductService {
         this.repository = repository;
     }
 
-    // async createProduct() {
-    //     const newProduct = await this.repo
-    // };
+    async createProduct(product) {
+        const newProduct = await this.repository.createProduct(product);
+        return newProduct;
+    };
 
     async getProducts() {
         const response = await this.repository.getProducts();

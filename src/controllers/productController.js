@@ -2,14 +2,14 @@ const FakeStoreRepository = require('../repositories/fakeStoreRepo');
 const ProductService = require('../services/productService');
 const productService = new ProductService(new FakeStoreRepository());
 
-function createProduct(req, res) {
+async function createProduct(req, res) {
     try {
-        
+        const response = await productService.createProduct(req.body);
         return res.status(201).send({
             success: true,
             error: {},
             message: 'Product added successfully',
-            data: data
+            data: response
         })
     } catch (error) {
         console.log(error);

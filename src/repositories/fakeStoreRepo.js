@@ -2,6 +2,15 @@ const { default: axios } = require("axios")
 
 
 class FakeStoreRepository {
+
+    async createProduct(product) {
+        try {
+            const response = await axios.post('https://fakestoreapi.com/products', product);
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
     
     async getProducts() {
         try {
