@@ -1,15 +1,12 @@
 const express = require('express');
 // const responseTime = require('response-time');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
-const { port, dbHost, user, dbPassword, dbName } = require('./config/serverConfig');
+// const mysql = require('mysql2');
+const { port } = require('./config/serverConfig');
 
-const db = mysql.createConnection({
-    host: dbHost,
-    user: user,
-    password: dbPassword,
-    database: dbName
-});
+const db = require('./config/dbConfig');
+
+const Category = require('./models/category');
 
 const { pingController } = require('./controllers/pingController');
 const { configPingRoutes } = require('./routes/v1/pingRouter');
@@ -27,14 +24,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api", apiRouter);
 
-app.listen(port, () => {
+app.listen(port, async() => {
     console.log("Server is running on port:", port);
-    db.connect((err) => {
-        if (err) {
-            console.log("database connection error");
-            console.log(err);
-            throw err;
-        }
-        console.log("database connected");
-    });
+    await db.sync();
+    console.log("database connected");
+    // const res = await Category.create({
+    //     name: 'Electronics',
+    //     description: 'Electronics Category'
+    // });
+    // console.log(res);
+
 });
