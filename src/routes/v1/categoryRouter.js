@@ -1,11 +1,11 @@
 const express = require('express');
-const { createCategory } = require('../../controllers/categoryController');
+const { createCategory, getCategories, getCategory } = require('../../controllers/categoryController');
 
 const categoryRuter = express.Router();
 
 categoryRuter.post("/", createCategory);
-// categoryRuter.get("/", productController.getProducts);
-// categoryRuter.get("/:id", productController.getProduct);
+categoryRuter.get("/", getCategories);
+categoryRuter.get("/:id", getCategory);
 
 
 

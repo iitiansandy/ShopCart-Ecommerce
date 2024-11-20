@@ -24,7 +24,7 @@ async function createCategory(req, res) {
 
 async function getCategories(req, res) {
     try {
-        const response = await productService.getProducts();
+        const response = await categoryService.getCategories();
         return res.status(200).send({
             success: true,
             message: 'Category fetched successfully',
@@ -39,7 +39,7 @@ async function getCategories(req, res) {
 
 async function getCategory(req, res) {
     try {
-        const response = await productService.getProduct(req.params.id);
+        const response = await categoryService.getCategory(req.params.id);
         return res.status(200).send({
             success: true,
             message: 'Categories fetched successfully',
@@ -53,5 +53,7 @@ async function getCategory(req, res) {
 
 
 module.exports = {
-    createCategory
+    createCategory,
+    getCategories,
+    getCategory
 }
