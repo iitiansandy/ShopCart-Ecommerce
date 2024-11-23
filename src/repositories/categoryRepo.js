@@ -8,6 +8,7 @@ class CategoryRepository {
             return response;
         } catch (error) {
             console.log(error);
+            throw error;
         }
     };
     
@@ -17,6 +18,7 @@ class CategoryRepository {
             return response;
         } catch (error) {
             console.log(error);
+            throw error;
         }
     };
 
@@ -26,6 +28,21 @@ class CategoryRepository {
             return response;
         } catch (error) {
             console.log(error);
+            throw error;
+        }
+    };
+
+    async destroyCategory(id) {
+        try {
+            const response = await Category.destroy({
+                where: {
+                    id: id
+                }
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
         }
     };
 }

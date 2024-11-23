@@ -26,7 +26,7 @@ app.use("/api", apiRouter);
 
 app.listen(port, async() => {
     console.log("Server is running on port:", port);
-    await db.sync({ alter: true });
+    await db.sync();
     console.log("database connected");
     // const res = await Category.create({
     //     name: 'Electronics',

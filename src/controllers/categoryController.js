@@ -1,6 +1,7 @@
 
 const CategoryService = require('../services/categoryService');
 const CategoryRepository = require('../repositories/categoryRepo');
+const { errorResponse } = require('../utils/errorResponse');
 const categoryService = new CategoryService(new CategoryRepository());
 
 async function createCategory(req, res) {
@@ -14,10 +15,7 @@ async function createCategory(req, res) {
         })
     } catch (error) {
         console.log(error);
-        return res.status(500).send({
-            status: false,
-            message: error.message
-        });
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 
@@ -32,7 +30,7 @@ async function getCategories(req, res) {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).send({ message: error.message });
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 
@@ -46,8 +44,21 @@ async function getCategory(req, res) {
             data: response
         });
     } catch (error) {
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
+async function destroyCategory(req, res) {
+    try {
+        const response = await categoryService.destroyCategory(req.params.id);
+        return res.status(200).send({
+            success: true,
+            message: 'Categories deleted successfully',
+            data: response
+        });
+    } catch (error) {
         console.log(error);
-        return res.status(500).send({ message: error.message });
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 
@@ -55,5 +66,6 @@ async function getCategory(req, res) {
 module.exports = {
     createCategory,
     getCategories,
-    getCategory
+    getCategory,
+    destroyCategory
 }
