@@ -2,6 +2,7 @@
 const ProductRepo = require('../repositories/productRepo');
 const ProductService = require('../services/productService');
 const productService = new ProductService(new ProductRepo());
+const { errorResponse } = require('../utils/errorResponse');
 
 async function createProduct(req, res) {
     try {
@@ -13,11 +14,8 @@ async function createProduct(req, res) {
             data: response
         })
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({
-            status: false,
-            message: error.message
-        });
+        console.log("Error in createProduct controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 
@@ -31,8 +29,8 @@ async function getProducts(req, res) {
             data: response
         });
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({ message: error.message });
+        console.log("Error in getProducts controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 
@@ -46,8 +44,8 @@ async function getProduct(req, res) {
             data: response
         });
     } catch (error) {
-        console.log(error);
-        return res.status(500).send({ message: error.message });
+        console.log("Error in getProduct controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
 

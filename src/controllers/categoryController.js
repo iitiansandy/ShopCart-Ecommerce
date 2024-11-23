@@ -14,7 +14,7 @@ async function createCategory(req, res) {
             data: response
         })
     } catch (error) {
-        console.log(error);
+        console.log("Error in createCategory controller:", error);
         return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
@@ -29,7 +29,7 @@ async function getCategories(req, res) {
             data: response
         });
     } catch (error) {
-        console.log(error);
+        console.log("Error in getCategories controller:", error);
         return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
@@ -44,6 +44,7 @@ async function getCategory(req, res) {
             data: response
         });
     } catch (error) {
+        console.log("Error in getCategory controller:", error);
         return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
@@ -57,7 +58,7 @@ async function destroyCategory(req, res) {
             data: response
         });
     } catch (error) {
-        console.log(error);
+        console.log("Error in destroyCategory controller:", error);
         return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
