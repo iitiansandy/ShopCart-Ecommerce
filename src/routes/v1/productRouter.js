@@ -1,9 +1,11 @@
 const express = require('express');
 const { productController } = require('../../controllers/index');
 
+const { productValidation } = require('../../middlewares/productValidator');
+
 const productRuter = express.Router();
 
-productRuter.post("/", productController.createProduct);
+productRuter.post("/", productValidation, productController.createProduct);
 productRuter.get("/", productController.getProducts);
 productRuter.get("/:id", productController.getProduct);
 

@@ -1,6 +1,7 @@
-const FakeStoreRepository = require('../repositories/fakeStoreRepo');
+
+const ProductRepo = require('../repositories/productRepo');
 const ProductService = require('../services/productService');
-const productService = new ProductService(new FakeStoreRepository());
+const productService = new ProductService(new ProductRepo());
 
 async function createProduct(req, res) {
     try {
