@@ -43,6 +43,22 @@ class ProductService {
             throw new InternalServerError();
         }
     }
+
+    async destroyProduct (id) {
+        try {
+            const response = await this.repository.destroyProduct(id);
+            if (!response) {
+                throw new NotFound("Product", "id", id);
+            }
+            return response;
+        } catch (error) {
+            if (error.name === "NotFound") {
+                throw error;
+            }
+            console.log("Error from destroyProduct Service:", error);
+            throw new InternalServerError();
+        }
+    };
 }
 
 

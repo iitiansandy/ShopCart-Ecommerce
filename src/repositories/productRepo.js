@@ -59,6 +59,20 @@ class ProductRepository {
             throw error;
         }
     };
+
+    async destroyProduct(id) {
+        try {
+            const response = await Product.destroy({
+                where: {
+                    id: id
+                }
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
 }
 
 

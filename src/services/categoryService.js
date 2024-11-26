@@ -65,6 +65,9 @@ class CategoryService {
             }
             return response;
         } catch (error) {
+            if (error.name === "NotFound") {
+                throw error;
+            }
             console.log("Error from destroyCategory Service:", error);
             throw new InternalServerError();
         }

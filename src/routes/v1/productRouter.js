@@ -8,6 +8,7 @@ const productRuter = express.Router();
 productRuter.post("/", productValidation, productController.createProduct);
 productRuter.get("/", productController.getProducts);
 productRuter.get("/:id", productController.getProduct);
+productRuter.delete("/:id", productController.destroyProduct);
 
 
 

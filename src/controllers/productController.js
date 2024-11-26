@@ -50,8 +50,24 @@ async function getProduct(req, res) {
 };
 
 
+async function destroyProduct(req, res) {
+    try {
+        const response = await productService.destroyProduct(req.params.id);
+        return res.status(200).send({
+            success: true,
+            message: 'Product deleted successfully',
+            data: response
+        });
+    } catch (error) {
+        console.log("Error in destroyProduct controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
+
 module.exports = {
     createProduct,
     getProducts,
-    getProduct
+    getProduct,
+    destroyProduct
 }
