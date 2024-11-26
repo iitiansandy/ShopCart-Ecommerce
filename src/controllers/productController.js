@@ -1,6 +1,6 @@
 
-const ProductRepo = require('../repositories/productRepo');
-const ProductService = require('../services/productService');
+const { ProductRepo } = require('../repositories/index');
+const {ProductService} = require('../services/index');
 const productService = new ProductService(new ProductRepo());
 const { errorResponse } = require('../utils/errorResponse');
 

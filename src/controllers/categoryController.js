@@ -1,8 +1,8 @@
 
-const CategoryService = require('../services/categoryService');
-const CategoryRepository = require('../repositories/categoryRepo');
+const {CategoryService} = require('../services/index');
 const { errorResponse } = require('../utils/errorResponse');
-const categoryService = new CategoryService(new CategoryRepository());
+const { ProductRepo, CategoryRepo, FakeStoreRepo } = require('../repositories/index');
+const categoryService = new CategoryService(new CategoryRepo(), new ProductRepo());
 
 async function createCategory(req, res) {
     try {
@@ -63,10 +63,26 @@ async function destroyCategory(req, res) {
     }
 };
 
+async function getProductForCategory(req, res) {
+    try {
+        console.log("id:", req.params.id);
+        const response = await categoryService.getProductsForCategory(req.params.id);
+        return res.status(200).send({
+            success: true,
+            message: 'products fetched successfully',
+            data: response
+        });
+    } catch (error) {
+        console.log("Error in getProductForCategory controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
 
 module.exports = {
     createCategory,
     getCategories,
     getCategory,
-    destroyCategory
+    destroyCategory,
+    getProductForCategory
 }

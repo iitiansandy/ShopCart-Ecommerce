@@ -45,6 +45,17 @@ class CategoryRepository {
             throw error;
         }
     };
+
+    // async getProductsForCategory(id) {
+    //     try {
+    //         const category = await Category.findByPk(id);
+    //         const products = await category.getProducts();
+    //         return products;
+    //     } catch (error) {
+    //         console.log(error);
+    //         throw error;
+    //     }
+    // }
 }
 
 

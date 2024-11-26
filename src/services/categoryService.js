@@ -2,9 +2,24 @@ const InternalServerError = require("../errors/internalServerError");
 const NotFound = require("../errors/notFoundError");
 
 class CategoryService {
-    constructor(repository) {
+    constructor(repository, productRepo) {
         this.repository = repository;
+        this.productRepo = productRepo;
     }
+
+    async getProductsForCategory(id) {
+        try {
+            await this.getCategory(id);
+            const response = await this.productRepo.getProductsForCategory(id);
+            return response;
+        } catch (error) {
+            if (error.name === "NotFound") {
+                throw error;
+            }
+            console.log("Error from getProductForCategory Service:", error);
+            throw new InternalServerError();
+        }
+    };
 
     async createCategory (category) {
         try {
@@ -14,7 +29,7 @@ class CategoryService {
             console.log("Error from createCategory Service:", error);
             throw new InternalServerError();
         }
-    }
+    };
 
     async getCategories () {
         try {
@@ -24,7 +39,7 @@ class CategoryService {
             console.log("Error from getCategories Service:", error);
             throw new InternalServerError();
         }
-    }
+    };
 
     async getCategory (id) {
         try {
@@ -40,7 +55,7 @@ class CategoryService {
             console.log("Error from getCategory Service:", error);
             throw new InternalServerError();
         }
-    }
+    };
 
     async destroyCategory (id) {
         try {
@@ -53,7 +68,7 @@ class CategoryService {
             console.log("Error from destroyCategory Service:", error);
             throw new InternalServerError();
         }
-    }
+    };
 };
 
 

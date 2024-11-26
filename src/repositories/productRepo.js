@@ -45,6 +45,20 @@ class ProductRepository {
             throw error;
         }
     };
+
+    async getProductsForCategory(categoryId) {
+        try {
+            const products = await Product.findAll({
+                where: {
+                    categoryId: categoryId
+                }
+            });
+            return products;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
 }
 
 
