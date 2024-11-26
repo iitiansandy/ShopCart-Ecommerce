@@ -1,6 +1,7 @@
 const fakeStoreRepo = require('../repositories/fakeStoreRepo');
 const InternalServerError = require("../errors/internalServerError");
 const NotFound = require("../errors/notFoundError");
+const BadRequest = require('../errors/badRequestError');
 
 class ProductService {
 
@@ -18,11 +19,26 @@ class ProductService {
         }
     };
 
-    async getProducts() {
+    async getProducts(query) {
         try {
-            const response = await this.repository.getProducts();
+            if((query.limit && isNaN(query.limit)) || (query.offset && isNaN(query.offset))) {
+                throw new BadRequest("limit, offset", true);
+            };
+
+            if(query.minPrice && isNaN(query.minPrice)) {
+                throw new BadRequest("minPrice", true);
+            };
+
+            if(query.maxPrice && isNaN(query.maxPrice)) {
+                throw new BadRequest("maxPrice", true);
+            };
+
+            const response = await this.repository.getProducts(+query.limit, +query.offset, +query.minPrice, +query.maxPrice);
             return response;
         } catch (error) {
+            if (error.name === "BadRequest") {
+                throw error;
+            }
             console.log("Error from getProducts Service:", error);
             throw new InternalServerError();
         }

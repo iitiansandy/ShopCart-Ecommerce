@@ -1,4 +1,5 @@
 const {Product} = require('../models/index');
+const { Op } = require('sequelize');
 
 class ProductRepository {
 
@@ -12,9 +13,44 @@ class ProductRepository {
         }
     };
     
-    async getProducts() {
+    async getProducts(limit, offset, minPrice, maxPrice) {
         try {
-            const response = await Product.findAll();
+            const filter = {};
+            if (limit) {
+                filter.limit = limit;
+            };
+
+            if (offset) {
+                filter.offset = offset;
+            };
+
+            const minValue = minPrice ? minPrice : Number.MIN_SAFE_INTEGER;
+            const maxValue = maxPrice ? maxPrice : Number.MAX_SAFE_INTEGER;
+
+            const response = await Product.findAll({
+                where: { 
+                    price: { 
+                        [Op.between]: [minValue, maxValue]
+                    }
+                },
+                ...filter
+            })
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
+
+    async searchProducts(search_query) {
+        try {
+            const response = await Product.findAll({
+                where: { 
+                    title: { 
+                        [Op.like]: `%${search_query}`
+                    }
+                },
+            });
             return response;
         } catch (error) {
             console.log(error);
