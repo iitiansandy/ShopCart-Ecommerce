@@ -2,6 +2,7 @@ const express = require('express');
 // const responseTime = require('response-time');
 const bodyParser = require('body-parser');
 // const mysql = require('mysql2');
+const cookieParser = require('cookie-parser');
 const { port, dbAlter, dbForce } = require('./config/serverConfig');
 
 const db = require('./config/dbConfig');
@@ -22,6 +23,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/api", apiRouter);
 

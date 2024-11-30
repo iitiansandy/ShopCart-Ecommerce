@@ -3,6 +3,7 @@ const {UserService} = require('../services/index');
 const { errorResponse } = require('../utils/errorResponse');
 const { UserRepo } = require('../repositories/index');
 const { StatusCodes } = require('http-status-codes');
+const { nodeEnv } = require('../config/serverConfig');
 const userService = new UserService(new UserRepo());
 
 async function createUser(req, res) {
@@ -24,6 +25,9 @@ async function createUser(req, res) {
 async function signInUser(req, res) {
     try {
         const response = await userService.signInUser(req.body);
+        // let flag = nodeEnv === "Development"? false : true;
+        res.cookie('token', response, {httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, secure: false});
+        
         return res.status(StatusCodes.OK).send({
             success: true,
             error: {},

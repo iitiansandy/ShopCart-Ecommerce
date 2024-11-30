@@ -10,5 +10,8 @@ module.exports = {
     dbName: process.env.DB_DATABASE,
     dbAlter: process.env.DB_ALTER,
     dbForce: process.env.DB_FORCE,
-    saltRounds: process.env.SALT_ROUNDS
+    saltRounds: process.env.SALT_ROUNDS,
+    jwtSecret: process.env.JWT_SECRET,
+    jwtExpiry: process.env.JWT_EXPIRY,
+    nodeEnv: process.env.NODE_ENV
 }

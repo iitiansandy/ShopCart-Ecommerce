@@ -4,6 +4,7 @@ const InternalServerError = require("../errors/internalServerError");
 const NotFound = require("../errors/notFoundError");
 const bcrypt = require('bcrypt');
 const UnauthorizedError = require("../errors/unauthorizedError");
+const { generateJWT } = require("../utils/auth");
 
 class UserService {
     constructor(repository) {
@@ -68,8 +69,10 @@ class UserService {
             const isPasswordMatch = bcrypt.compareSync(data.password, user.password);
             if (!isPasswordMatch) {
                 throw new UnauthorizedError();
-            }
-            return isPasswordMatch;
+            };
+
+
+            return generateJWT({email: user.email, id: user.id});
         } catch (error) {
             if ( error.name === "NotFound" || error.name === "UnauthorizedError") {
                 throw error;
