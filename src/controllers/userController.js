@@ -2,12 +2,13 @@
 const {UserService} = require('../services/index');
 const { errorResponse } = require('../utils/errorResponse');
 const { UserRepo } = require('../repositories/index');
+const { StatusCodes } = require('http-status-codes');
 const userService = new UserService(new UserRepo());
 
 async function createUser(req, res) {
     try {
         const response = await userService.createUser(req.body);
-        return res.status(201).send({
+        return res.status(StatusCodes.CREATED).send({
             success: true,
             error: {},
             message: 'User added successfully',
@@ -15,6 +16,22 @@ async function createUser(req, res) {
         })
     } catch (error) {
         console.log("Error in createUser controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
+
+async function signInUser(req, res) {
+    try {
+        const response = await userService.signInUser(req.body);
+        return res.status(StatusCodes.OK).send({
+            success: true,
+            error: {},
+            message: 'successfully signedId',
+            data: response
+        })
+    } catch (error) {
+        console.log("Error in signInUser controller:", error);
         return res.status(error.statusCode).send(errorResponse(error.reason, error));
     }
 };
@@ -84,5 +101,6 @@ module.exports = {
     getCategories,
     getCategory,
     destroyCategory,
-    getProductForCategory
+    getProductForCategory,
+    signInUser
 }

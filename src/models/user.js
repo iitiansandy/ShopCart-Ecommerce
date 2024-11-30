@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../config/dbConfig');
+// const { Hooks } = require('sequelize/lib/hooks');
+const bcrypt = require('bcrypt');
+const { saltRounds } = require('../config/serverConfig');
 
 const User = db.define('user', {
     email: {
@@ -17,6 +20,13 @@ const User = db.define('user', {
         validate: {
             len: [3, 30],
             isAlphanumeric: true
+        }
+    }
+}, {
+    hooks: {
+        beforeCreate: function(user) {
+            const salt = bcrypt.genSaltSync(+saltRounds);
+            user.password = bcrypt.hashSync(user.password, salt);
         }
     }
 });

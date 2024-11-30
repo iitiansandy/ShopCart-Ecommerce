@@ -9,5 +9,6 @@ module.exports = {
     dbPassword: process.env.DB_PASSWORD,
     dbName: process.env.DB_DATABASE,
     dbAlter: process.env.DB_ALTER,
-    dbForce: process.env.DB_FORCE
+    dbForce: process.env.DB_FORCE,
+    saltRounds: process.env.SALT_ROUNDS
 }
