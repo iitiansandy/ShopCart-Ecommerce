@@ -1,10 +1,10 @@
 
 const {UserService} = require('../services/index');
 const { errorResponse } = require('../utils/errorResponse');
-const { UserRepo } = require('../repositories/index');
+const { UserRepo, CartRepo } = require('../repositories/index');
 const { StatusCodes } = require('http-status-codes');
 const { nodeEnv } = require('../config/serverConfig');
-const userService = new UserService(new UserRepo());
+const userService = new UserService(new UserRepo(), new CartRepo());
 
 async function createUser(req, res) {
     try {
