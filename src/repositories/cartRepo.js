@@ -34,6 +34,35 @@ class CartRepository {
         }
     };
 
+    async getCartProducts(id) {
+        try {
+            let response = await CartProducts.findAll({
+                where: {
+                    cartId: id
+                }
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
+
+
+    async clearCart(id) {
+        try {
+            let response = await CartProducts.destroy({
+                where: {
+                    cartId: id
+                }
+            });
+            return response;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    };
+
     async destroyCart(id) {
         try {
             const response = await Cart.destroy({

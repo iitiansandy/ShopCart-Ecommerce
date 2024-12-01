@@ -21,7 +21,40 @@ async function updateCart(req, res) {
     }
 };
 
+async function getCartProducts(req, res) {
+    try {
+        const response = await cartService.getCartProducts(req.params.id, req.user.id);
+        return res.status(StatusCodes.OK).send({
+            success: true,
+            error: {},
+            message: 'Cart products fetched successfully',
+            data: response
+        })
+    } catch (error) {
+        console.log("Error in updateCart controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
+
+async function clearCart(req, res) {
+    try {
+        const response = await cartService.clearCart(req.params.id, req.user.id);
+        return res.status(StatusCodes.OK).send({
+            success: true,
+            error: {},
+            message: 'Cart updated successfully',
+            data: response
+        })
+    } catch (error) {
+        console.log("Error in updateCart controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
 
 module.exports = {
-    updateCart
+    updateCart,
+    getCartProducts,
+    clearCart
 }
