@@ -52,7 +52,24 @@ async function clearCart(req, res) {
 };
 
 
+async function getOrder(req, res) {
+    try {
+        const response = await orderService.fetchOrderDetails(req.user.id, req.params.id);
+        
+        return res.status(StatusCodes.OK).send({
+            success: true,
+            error: {},
+            message: 'Order fetched successfully',
+            data: response
+        })
+    } catch (error) {
+        console.log("Error in getOrder controller:", error);
+        return res.status(error.statusCode).send(errorResponse(error.reason, error));
+    }
+};
+
+
 module.exports = {
     createOrder,
-   
+    getOrder
 }

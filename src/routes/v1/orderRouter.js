@@ -5,7 +5,7 @@ const { isLoggedIn } = require('../../middlewares/authMiddleware');
 const orderRuter = express.Router();
 
 orderRuter.post("/", isLoggedIn, orderController.createOrder);
-// orderRuter.patch("/:id/products", isLoggedIn, cartController.getCartProducts);
+orderRuter.get("/:id", isLoggedIn, orderController.getOrder);
 // orderRuter.delete("/:id/products", isLoggedIn, cartController.clearCart);
 
 
