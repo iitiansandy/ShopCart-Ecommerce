@@ -35,14 +35,95 @@ describe('Tests for category repository category creation', () => {
         // Act
         
         try {
-            //  expect(async () => await repository.createCategory('Education', 'Education category')).toThrow();
             const response = await repository.createCategory('Education', 'Education category');
         } catch (error) {
             expect(error).toBe(mockError);
         }
-
-        // Expect / Assert
-       
-        // expect(response.description).toBe('Education category');
     })
-})
+});
+
+describe('Tests for category repository get category', () => {
+    test('should get one category', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'findByPk').mockImplementation(() => mockCategory);
+
+        // Act
+        const response = await repository.getCategory(1);
+        // Expect / Assert
+        expect(response.name).toBe('Education');
+        expect(response.description).toBe('Education category');
+    });
+
+    test('should not get a category and throws an exception', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'findByPk').mockImplementation(() => {
+            throw mockError;
+        });
+
+        // Act
+        try {
+            const response = await repository.getCategory(1);
+        } catch (error) {
+            expect(error).toBe(mockError);
+        }
+    })
+});
+
+describe('Tests for category repository get categories', () => {
+    test('should get all categories', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'findAll').mockImplementation(() => [mockCategory]);
+
+        // Act
+        const response = await repository.getCategories();
+        // Expect / Assert
+        expect(response).toHaveLength(1);
+        expect(response).toContain(mockCategory);
+    });
+
+    test('should not get all categories and throws an exception', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'findAll').mockImplementation(() => {
+            throw mockError;
+        });
+
+        // Act
+        try {
+            const response = await repository.getCategories();
+        } catch (error) {
+            expect(error).toBe(mockError);
+        }
+    });
+});
+
+describe('Tests for category repository destroy category', () => {
+    test('should delete one category', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'destroy').mockImplementation(() => 1);
+
+        // Act
+        const response = await repository.destroyCategory(1);
+        // Expect / Assert
+        expect(response).toBe(1);
+    });
+
+    test('should not delete category and throws an exception', async() => {
+        // Prepare
+        const repository = new CategoryRepo();
+        jest.spyOn(Category, 'destroy').mockImplementation(() => {
+            throw mockError;
+        });
+
+        // Act
+        try {
+            const response = await repository.destroyCategory(1);
+        } catch (error) {
+            expect(error).toBe(mockError);
+        }
+    });
+});
